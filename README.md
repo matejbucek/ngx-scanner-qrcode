@@ -30,7 +30,7 @@ In the Component:
 <span>{{output}}</span>
 ```
 
-## API Documentation
+### API Documentation
 
 #### Input
 
@@ -38,7 +38,7 @@ In the Component:
 | --- | --- | --- | --- |
 | height | height of canvas | number | 300 |
 | width | width of canvas | number | 400 |
-| line | line frame qrcode | number | 3 |
+| line | line frame qrcode | number | 1 |
 | color | color of line | string | `#008000` |
 
 #### Ouput
@@ -46,21 +46,21 @@ In the Component:
 | Field | Description | Type | Default |
 | --- | --- | --- | --- |
 | data | data of qrcode | string | - |
-| message | detected | string | - |
-| loading | Loading video | boolean | - |
 
-#### Function
+#### Component export
 
 | Field | Description | Type | Default |
 | --- | --- | --- | --- |
+| toggleCamera | Active/Inactive camera | function | - |
 | start | Active camera | function | - |
 | stop | Inactive camera | function | - |
+| isLoading | Check start fn | boolean | false |
+| isStart | Start Video | boolean | false |
 
-## Support versions Angular >= 8.0.3
+#### Support versions Angular >= 8.0.3
 
-\
 Author: `DaiDH`, Tel: `0845882882`
 
-### License
+#### License
 
 [MIT License](https://github.com/id1945/ngx-scanner-qrcode/blob/master/LICENSE). Copyright (c) 2021 DaiDH
