@@ -23,11 +23,11 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 ```
 
 In the Component:
+
 ```html
 <ngx-scanner-qrcode #action="scanner" [height]="200" [width]="300" (data)="output = $event"></ngx-scanner-qrcode>
-<button (click)="action.start()">Start</button>
-<button (click)="action.stop()">Stop</button>
 <span>{{output}}</span>
+<button (click)="action.toggleCamera()">{{action.isStart ? 'Stop' : 'Start'}}</button>
 ```
 
 ### API Documentation

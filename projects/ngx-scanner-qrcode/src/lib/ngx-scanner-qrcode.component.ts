@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import jsQR from './qrcode';
 
 @Component({
@@ -22,6 +22,8 @@ export class NgxScannerQrcodeComponent {
   public isLoading = false;
   public isStart = false;
 
+  constructor(private cdf: ChangeDetectorRef) { }
+
   ngOnInit(): void {
     this.initBackgroundColor();
   }
@@ -41,7 +43,10 @@ export class NgxScannerQrcodeComponent {
   }
 
   public start() {
+    if (this.isStart)
+      return;
     this.isLoading = true;
+    this.cdf.detectChanges();
     const canvas = this.canvasElm.nativeElement;
     const video = this.videoElm.nativeElement;
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -89,6 +94,7 @@ export class NgxScannerQrcodeComponent {
   public stop() {
     this.isStart = false;
     this.isLoading = false;
+    this.cdf.detectChanges();
     this.videoElm.nativeElement && this.videoElm.nativeElement.srcObject.getTracks().forEach(track => track.stop());
   }
 }
