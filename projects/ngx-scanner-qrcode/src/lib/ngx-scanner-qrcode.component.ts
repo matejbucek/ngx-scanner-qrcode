@@ -17,7 +17,6 @@ export class NgxScannerQrcodeComponent {
   @Input() width: number = 450;
   @Input() line: number = 2;
   @Output() data = new EventEmitter<string>();
-  @Output() loading = new EventEmitter<boolean>();
 
   private medias: MediaStreamConstraints = { video: { facingMode: "environment" } };
   public isLoading = false;
@@ -36,6 +35,7 @@ export class NgxScannerQrcodeComponent {
   }
 
   public toggleCamera() {
+    this.isLoading = !this.isStart;
     if (this.isStart) {
       this.stop()
     } else {
@@ -46,7 +46,6 @@ export class NgxScannerQrcodeComponent {
   public start() {
     if (this.isStart)
       return;
-    this.loading.emit(true);
     const ctx = this.canvasElm.nativeElement.getContext('2d') as CanvasRenderingContext2D;
     const drawFrame = (begin, end) => {
       ctx.beginPath();
@@ -85,7 +84,6 @@ export class NgxScannerQrcodeComponent {
           this.data.emit(code.data ? code.data : '');
         }
         this.isLoading = false;
-        this.loading.emit(false);
       }
       requestAnimationFrame(scanner);
     }
