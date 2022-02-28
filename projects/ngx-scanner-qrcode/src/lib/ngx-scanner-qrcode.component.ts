@@ -41,6 +41,7 @@ export class NgxScannerQrcodeComponent {
   }
 
   public start() {
+    this.isLoading = true;
     const canvas = this.canvasElm.nativeElement;
     const video = this.videoElm.nativeElement;
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -58,15 +59,14 @@ export class NgxScannerQrcodeComponent {
       video.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
       video.play();
     }).then(res => {
-      requestAnimationFrame(scanner);
       this.isStart = true;
+      requestAnimationFrame(scanner);
     }).catch(error => {
       this.stop();
       console.log(error);
     });
 
     const scanner = () => {
-      this.isLoading = true;
       if (video.readyState === video.HAVE_ENOUGH_DATA) {
         ctx.drawImage(video, 0, 0, this.width, this.height);
         const imageData = ctx.getImageData(0, 0, this.width, this.height);
@@ -79,8 +79,6 @@ export class NgxScannerQrcodeComponent {
           drawFrame(code.location.bottomRightCorner, code.location.bottomLeftCorner);
           drawFrame(code.location.bottomLeftCorner, code.location.topLeftCorner);
           this.data.emit(code.data ? code.data : '');
-        } else {
-          this.data.emit(null);
         }
         this.isLoading = false;
       }
@@ -90,6 +88,7 @@ export class NgxScannerQrcodeComponent {
 
   public stop() {
     this.isStart = false;
+    this.isLoading = false;
     this.videoElm.nativeElement && this.videoElm.nativeElement.srcObject.getTracks().forEach(track => track.stop());
   }
 }
