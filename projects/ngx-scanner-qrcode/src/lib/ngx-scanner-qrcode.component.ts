@@ -54,10 +54,10 @@ export class NgxScannerQrcodeComponent {
           drawFrame(code.location.bottomRightCorner, code.location.bottomLeftCorner);
           drawFrame(code.location.bottomLeftCorner, code.location.topLeftCorner);
           this.data.emit(code.data);
-          this.message.emit('');
-        } else {
-          this.data.emit('No QR code detected.');
           this.message.emit(null);
+        } else {
+          this.data.emit(null);
+          this.message.emit('No QR code detected.');
         }
       }
       requestAnimationFrame(scanner);
