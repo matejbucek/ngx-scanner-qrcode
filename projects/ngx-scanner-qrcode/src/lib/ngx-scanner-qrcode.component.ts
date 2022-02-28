@@ -45,9 +45,7 @@ export class NgxScannerQrcodeComponent {
   public start() {
     if (this.isStart)
       return;
-    const canvas = this.canvasElm.nativeElement;
-    const video = this.videoElm.nativeElement;
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    const ctx = this.canvasElm.nativeElement.getContext('2d') as CanvasRenderingContext2D;
     const drawFrame = (begin, end) => {
       ctx.beginPath();
       ctx.moveTo(begin.x, begin.y);
@@ -58,9 +56,9 @@ export class NgxScannerQrcodeComponent {
     }
     // Use facingMode: environment to attemt to get the front camera on phones
     navigator.mediaDevices.getUserMedia(this.medias).then((stream: MediaStream) => {
-      video.srcObject = stream;
-      video.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
-      video.play();
+      this.videoElm.nativeElement.srcObject = stream;
+      this.videoElm.nativeElement.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
+      this.videoElm.nativeElement.play();
       this.isStart = true;
       this.isLoading = true;
     }).then(res => {
@@ -71,8 +69,8 @@ export class NgxScannerQrcodeComponent {
     });
 
     const scanner = () => {
-      if (video.readyState === video.HAVE_ENOUGH_DATA) {
-        ctx.drawImage(video, 0, 0, this.width, this.height);
+      if (this.videoElm.nativeElement.readyState === this.videoElm.nativeElement.HAVE_ENOUGH_DATA) {
+        ctx.drawImage(this.videoElm.nativeElement, 0, 0, this.width, this.height);
         const imageData = ctx.getImageData(0, 0, this.width, this.height);
         const code = jsQR(imageData.data, imageData.width, imageData.height, {
           inversionAttempts: "dontInvert",
