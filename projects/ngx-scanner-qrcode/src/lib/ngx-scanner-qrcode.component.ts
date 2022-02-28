@@ -46,6 +46,21 @@ export class NgxScannerQrcodeComponent {
   public start() {
     if (this.isStart)
       return;
+
+    // Use facingMode: environment to attemt to get the front camera on phones
+    navigator.mediaDevices.getUserMedia(this.medias).then((stream: MediaStream) => {
+      this.isStart = true;
+      this.isLoading = true;
+      this.videoElm.nativeElement.srcObject = stream;
+      this.videoElm.nativeElement.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
+      this.videoElm.nativeElement.play();
+    }).then(res => {
+      requestAnimationFrame(scanner);
+    }).catch(error => {
+      this.stop();
+      console.log(error);
+    });
+
     const ctx = this.canvasElm.nativeElement.getContext('2d') as CanvasRenderingContext2D;
     const drawFrame = (begin, end) => {
       ctx.beginPath();
@@ -55,19 +70,6 @@ export class NgxScannerQrcodeComponent {
       ctx.strokeStyle = this.color;
       ctx.stroke();
     }
-    // Use facingMode: environment to attemt to get the front camera on phones
-    navigator.mediaDevices.getUserMedia(this.medias).then((stream: MediaStream) => {
-      this.videoElm.nativeElement.srcObject = stream;
-      this.videoElm.nativeElement.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
-      this.videoElm.nativeElement.play();
-      this.isStart = true;
-      this.isLoading = true;
-    }).then(res => {
-      requestAnimationFrame(scanner);
-    }).catch(error => {
-      this.stop();
-      console.log(error);
-    });
 
     const scanner = () => {
       if (this.videoElm.nativeElement.readyState === this.videoElm.nativeElement.HAVE_ENOUGH_DATA) {
