@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import jsQR from './qrcode';
 
 @Component({
@@ -14,15 +14,15 @@ export class NgxScannerQrcodeComponent {
 
   @Input() color: string = '#008000';
   @Input() height: number = 300;
-  @Input() width: number = 400;
-  @Input() line: number = 1;
+  @Input() width: number = 450;
+  @Input() line: number = 2;
   @Output() data = new EventEmitter<string>();
 
   private medias: MediaStreamConstraints = { video: { facingMode: "environment" } };
   public isLoading = false;
   public isStart = false;
 
-  constructor(private cdf: ChangeDetectorRef) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.initBackgroundColor();
@@ -45,8 +45,6 @@ export class NgxScannerQrcodeComponent {
   public start() {
     if (this.isStart)
       return;
-    this.isLoading = true;
-    this.cdf.detectChanges();
     const canvas = this.canvasElm.nativeElement;
     const video = this.videoElm.nativeElement;
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -63,8 +61,9 @@ export class NgxScannerQrcodeComponent {
       video.srcObject = stream;
       video.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
       video.play();
-    }).then(res => {
       this.isStart = true;
+      this.isLoading = true;
+    }).then(res => {
       requestAnimationFrame(scanner);
     }).catch(error => {
       this.stop();
@@ -93,8 +92,6 @@ export class NgxScannerQrcodeComponent {
 
   public stop() {
     this.isStart = false;
-    this.isLoading = false;
-    this.cdf.detectChanges();
     this.videoElm.nativeElement && this.videoElm.nativeElement.srcObject.getTracks().forEach(track => track.stop());
   }
 }
