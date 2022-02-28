@@ -1,0 +1,48 @@
+{
+  "name": "ngx-scanner-qrcode",
+  "version": "0.0.1",
+  "description": "This library is built to provide a solution scanner QR code. This library takes in raw images and will locate, extract and parse any QR code found within.",
+  "keywords": [
+    "ngx",
+    "angular2",
+    "angular2+",
+    "ng-qrcode",
+    "ng-qrcode-scanner",
+    "ngx-qrcode",
+    "ngx-qrcode-scanner",
+    "ngx-scanner-qrcode",
+    "angular-qrcode",
+    "angular-qrcode-scanner",
+    "ng-scanner",
+    "ngx-scanner",
+    "jsqr",
+    "jsqrcode",
+    "js-qrcode",
+    "js-scanner",
+    "qrcode-scanner",
+    "qrcode-reader",
+    "ng-qrcode-reader",
+    "ngx-qrcode-reader",
+    "ng-qrcodescanner",
+    "ngx-qrcodescanner",
+    "angular-qrcodescanner",
+    "qr-code-scanner",
+    "ng-qr-code-scanner",
+    "ngx-qr-code-scanner",
+    "html5-qrcode",
+    "qrcode-reader-angular",
+    "qr-scanner",
+    "qr-scanner-angular",
+    "webscan-qrcode"
+  ],
+  "author": "DaiDH <duonghuudai.id002@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com/id1945/ngx-scanner-qrcode.git"
+  },
+  "peerDependencies": {
+    "@angular/common": "^8.0.3",
+    "@angular/core": "^8.0.3"
+  }
+}
