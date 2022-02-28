@@ -13,9 +13,9 @@ export class NgxScannerQrcodeComponent {
   @Input() height: number = 300;
   @Input() width: number = 400;
   @Input() line: number = 3;
-  @Output() data = new EventEmitter(null);
-  @Output() message = new EventEmitter(null);
-  @Output() loading = new EventEmitter(null);
+  @Output() data = new EventEmitter();
+  @Output() message = new EventEmitter();
+  @Output() loading = new EventEmitter();
 
   private video: any;
   private medias: MediaStreamConstraints = { video: { facingMode: "environment" } };

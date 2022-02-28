@@ -45,16 +45,16 @@ In the Component:
 
 | Field | Description | Type | Default |
 | --- | --- | --- | --- |
-| data | data of qrcode | string | null |
-| message | detected | string | null |
-| loading | Loading video | boolean | null |
+| data | data of qrcode | string | - |
+| message | detected | string | - |
+| loading | Loading video | boolean | - |
 
 #### Function
 
 | Field | Description | Type | Default |
 | --- | --- | --- | --- |
-| start | Active camera | function | null |
-| stop | Inactive camera | function | null |
+| start | Active camera | function | - |
+| stop | Inactive camera | function | - |
 
 
 ## Support versions Angular >= 8.0.3
