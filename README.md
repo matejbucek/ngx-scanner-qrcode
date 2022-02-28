@@ -49,6 +49,13 @@ In the Component:
 | message | detected | string | null |
 | loading | Loading video | boolean | null |
 
+#### Function
+
+| Field | Description | Type | Default |
+| --- | --- | --- | --- |
+| start | Active camera | function | null |
+| stop | Inactive camera | function | null |
+
 ## Support versions Angular >= 8.0.3
 
 \
