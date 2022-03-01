@@ -89,6 +89,7 @@ export class NgxScannerQrcodeComponent {
   }
 
   public stop() {
+    this.data.emit(null);
     this.isStart = false;
     this.videoElm && this.videoElm.srcObject.getTracks().forEach(track => track.stop());
   }
