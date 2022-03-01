@@ -3,21 +3,20 @@ import jsQR from './qrcode';
 
 @Component({
   selector: 'ngx-scanner-qrcode',
-  template: `<canvas #canvas [style.height.px]="height" [style.width.px]="width"></canvas>
-  <video #video autoplay playsinline [style.height.px]="200" [style.width.px]="300" [style.display]="'none'"></video>`,
+  template: `<canvas #canvas [style.height.px]="height" [style.width.px]="width"></canvas>`,
   exportAs: 'scanner'
 })
 export class NgxScannerQrcodeComponent {
 
-  @ViewChild('video', { static: true }) videoElm: ElementRef;
   @ViewChild('canvas', { static: true }) canvasElm: ElementRef;
 
   @Input() color: string = '#008000';
   @Input() height: number = 300;
-  @Input() width: number = 450;
+  @Input() width: number = 480;
   @Input() line: number = 2;
   @Output() data = new EventEmitter<string>();
 
+  private videoElm: any;
   private medias: MediaStreamConstraints = { video: { facingMode: "environment" } };
   public isLoading = false;
   public isStart = false;
@@ -35,7 +34,6 @@ export class NgxScannerQrcodeComponent {
   }
 
   public toggleCamera() {
-    this.isLoading = !this.isStart;
     if (this.isStart) {
       this.stop()
     } else {
@@ -46,15 +44,14 @@ export class NgxScannerQrcodeComponent {
   public start() {
     if (this.isStart)
       return;
-
+    this.isLoading = true;
+    this.videoElm = document.createElement('video');
     // Use facingMode: environment to attemt to get the front camera on phones
     navigator.mediaDevices.getUserMedia(this.medias).then((stream: MediaStream) => {
       this.isStart = true;
-      this.isLoading = true;
-      this.videoElm.nativeElement.srcObject = stream;
-      this.videoElm.nativeElement.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
-      this.videoElm.nativeElement.play();
-    }).then(res => {
+      this.videoElm.srcObject = stream;
+      this.videoElm.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
+      this.videoElm.play();
       requestAnimationFrame(scanner);
     }).catch(error => {
       this.stop();
@@ -72,8 +69,8 @@ export class NgxScannerQrcodeComponent {
     }
 
     const scanner = () => {
-      if (this.videoElm.nativeElement.readyState === this.videoElm.nativeElement.HAVE_ENOUGH_DATA) {
-        ctx.drawImage(this.videoElm.nativeElement, 0, 0, this.width, this.height);
+      if (this.videoElm.readyState === this.videoElm.HAVE_ENOUGH_DATA) {
+        ctx.drawImage(this.videoElm, 0, 0, this.width, this.height);
         const imageData = ctx.getImageData(0, 0, this.width, this.height);
         const code = jsQR(imageData.data, imageData.width, imageData.height, {
           inversionAttempts: "dontInvert",
@@ -93,6 +90,6 @@ export class NgxScannerQrcodeComponent {
 
   public stop() {
     this.isStart = false;
-    this.videoElm.nativeElement && this.videoElm.nativeElement.srcObject.getTracks().forEach(track => track.stop());
+    this.videoElm && this.videoElm.srcObject.getTracks().forEach(track => track.stop());
   }
 }

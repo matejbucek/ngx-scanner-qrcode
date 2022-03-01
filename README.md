@@ -37,7 +37,7 @@ In the Component:
 | Field | Description | Type | Default |
 | --- | --- | --- | --- |
 | height | height of canvas | number | 300 |
-| width | width of canvas | number | 450 |
+| width | width of canvas | number | 480 |
 | line | line frame qrcode | number | 2 |
 | color | color of line | string | `#008000` |
 
