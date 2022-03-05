@@ -3,15 +3,7 @@ import jsQR from './qrcode';
 
 @Component({
   selector: 'ngx-scanner-qrcode',
-  template: `<canvas #canvas></canvas>`,
-  styles: [`
-    :host {
-      canvas {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  `],
+  template: `<canvas #canvas [style.width.%]="100" [style.height.%]="100"></canvas>`,
   exportAs: 'scanner'
 })
 export class NgxScannerQrcodeComponent {
@@ -19,7 +11,7 @@ export class NgxScannerQrcodeComponent {
   @ViewChild('canvas', { static: true }) canvasElm: ElementRef;
 
   @Input() color: string = '#008000';
-  @Input() line: number = 2;
+  @Input() line: number = 4;
   @Output() data = new EventEmitter<string>();
   @Output() error = new EventEmitter<any>();
 

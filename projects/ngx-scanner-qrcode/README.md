@@ -36,7 +36,7 @@ In the Component:
 
 | Field | Description | Type | Default |
 | --- | --- | --- | --- |
-| line | line frame qrcode | number | 2 |
+| line | line frame qrcode | number | 4 |
 | color | color of line | string | `#008000` |
 
 #### Ouput
