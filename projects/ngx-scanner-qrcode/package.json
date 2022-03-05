@@ -1,9 +1,11 @@
 {
   "name": "ngx-scanner-qrcode",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "This library is built to provide a solution scanner QR code. This library takes in raw images and will locate, extract and parse any QR code found within.",
   "keywords": [
+    "ng",
     "ngx",
+    "angular",
     "angular2",
     "angular2+",
     "scanner",

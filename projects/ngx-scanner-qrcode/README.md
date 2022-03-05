@@ -25,9 +25,9 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 In the Component:
 
 ```html
-<ngx-scanner-qrcode #action="scanner" [height]="200" [width]="300" (data)="output = $event"></ngx-scanner-qrcode>
+<ngx-scanner-qrcode #action="scanner" (data)="output = $event"></ngx-scanner-qrcode>
 <span>{{output}}</span>
-<button (click)="action.toggleCamera()">{{action.isStart ? 'Stop' : 'Start'}}</button>
+<button (click)="action.toggleCamera()" [disabled]="action.isLoading">{{action.isStart ? 'Stop' : 'Start'}}</button>
 ```
 
 ### API Documentation
@@ -36,8 +36,6 @@ In the Component:
 
 | Field | Description | Type | Default |
 | --- | --- | --- | --- |
-| height | height of canvas | number | 300 |
-| width | width of canvas | number | 480 |
 | line | line frame qrcode | number | 2 |
 | color | color of line | string | `#008000` |
 
@@ -46,6 +44,7 @@ In the Component:
 | Field | Description | Type | Default |
 | --- | --- | --- | --- |
 | data | data of qrcode | string | - |
+| error | error | any | - |
 
 #### Component export
 

@@ -3,7 +3,15 @@ import jsQR from './qrcode';
 
 @Component({
   selector: 'ngx-scanner-qrcode',
-  template: `<canvas #canvas [style.height.px]="height" [style.width.px]="width"></canvas>`,
+  template: `<canvas #canvas></canvas>`,
+  styles: [`
+    :host {
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  `],
   exportAs: 'scanner'
 })
 export class NgxScannerQrcodeComponent {
@@ -11,10 +19,9 @@ export class NgxScannerQrcodeComponent {
   @ViewChild('canvas', { static: true }) canvasElm: ElementRef;
 
   @Input() color: string = '#008000';
-  @Input() height: number = 300;
-  @Input() width: number = 480;
   @Input() line: number = 2;
   @Output() data = new EventEmitter<string>();
+  @Output() error = new EventEmitter<any>();
 
   private videoElm: any;
   private medias: MediaStreamConstraints = { video: { facingMode: "environment" } };
@@ -30,7 +37,7 @@ export class NgxScannerQrcodeComponent {
   private initBackgroundColor() {
     const ctx = this.canvasElm.nativeElement.getContext('2d') as CanvasRenderingContext2D;
     ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, this.width, this.height);
+    ctx.fillRect(0, 0, this.canvasElm.nativeElement.width, this.canvasElm.nativeElement.height);
   }
 
   public toggleCamera() {
@@ -55,7 +62,7 @@ export class NgxScannerQrcodeComponent {
       requestAnimationFrame(scanner);
     }).catch(error => {
       this.stop();
-      console.log(error);
+      this.error.emit(error);
     });
 
     const ctx = this.canvasElm.nativeElement.getContext('2d') as CanvasRenderingContext2D;
@@ -70,8 +77,10 @@ export class NgxScannerQrcodeComponent {
 
     const scanner = () => {
       if (this.videoElm.readyState === this.videoElm.HAVE_ENOUGH_DATA) {
-        ctx.drawImage(this.videoElm, 0, 0, this.width, this.height);
-        const imageData = ctx.getImageData(0, 0, this.width, this.height);
+        this.canvasElm.nativeElement.height = this.videoElm.videoHeight;
+        this.canvasElm.nativeElement.width = this.videoElm.videoWidth;
+        ctx.drawImage(this.videoElm, 0, 0, this.canvasElm.nativeElement.width, this.canvasElm.nativeElement.height);
+        const imageData = ctx.getImageData(0, 0, this.canvasElm.nativeElement.width, this.canvasElm.nativeElement.height);
         const code = jsQR(imageData.data, imageData.width, imageData.height, {
           inversionAttempts: "dontInvert",
         });
@@ -91,6 +100,10 @@ export class NgxScannerQrcodeComponent {
   public stop() {
     this.data.emit(null);
     this.isStart = false;
-    this.videoElm && this.videoElm.srcObject.getTracks().forEach(track => track.stop());
+    try {
+      this.videoElm && this.videoElm.srcObject.getTracks().forEach(track => track.stop());
+    } catch (error) {
+      this.error.emit(error);
+    }
   }
 }
