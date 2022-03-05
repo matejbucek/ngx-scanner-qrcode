@@ -53,8 +53,8 @@ export class NgxScannerQrcodeComponent {
       this.videoElm.play();
       requestAnimationFrame(scanner);
     }).catch(error => {
+      this.error.emit('No camera detected!');
       this.stop();
-      this.error.emit(error);
     });
 
     const ctx = this.canvasElm.nativeElement.getContext('2d') as CanvasRenderingContext2D;
@@ -92,6 +92,7 @@ export class NgxScannerQrcodeComponent {
   public stop() {
     this.data.emit(null);
     this.isStart = false;
+    this.isLoading = false;
     try {
       this.videoElm && this.videoElm.srcObject.getTracks().forEach(track => track.stop());
     } catch (error) {
