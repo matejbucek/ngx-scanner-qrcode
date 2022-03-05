@@ -52,10 +52,7 @@ export class NgxScannerQrcodeComponent {
       this.videoElm.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
       this.videoElm.play();
       requestAnimationFrame(scanner);
-    }).catch(error => {
-      this.error.emit('No camera detected!');
-      this.stop();
-    });
+    }).catch(() => this.stop());
 
     const ctx = this.canvasElm.nativeElement.getContext('2d') as CanvasRenderingContext2D;
     const drawFrame = (begin, end) => {
@@ -96,7 +93,7 @@ export class NgxScannerQrcodeComponent {
     try {
       this.videoElm && this.videoElm.srcObject.getTracks().forEach(track => track.stop());
     } catch (error) {
-      this.error.emit(error);
+      this.error.emit('No camera detected!');
     }
   }
 }
