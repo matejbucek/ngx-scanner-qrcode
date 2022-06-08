@@ -56,7 +56,9 @@ In the Component:
 | isLoading | Check start fn | boolean | false |
 | isStart | Start Video | boolean | false |
 
-#### Support versions Angular >= 8.0.3
+#### Support versions
+    1.1.0 >= Angular 9
+    1.0.17 >= Angular 8
 
 Author: `DaiDH`, Tel: `0845882882`
 

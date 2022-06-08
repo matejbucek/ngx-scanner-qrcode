@@ -15,7 +15,12 @@
             "tsConfig": "projects/ngx-scanner-qrcode/tsconfig.lib.json",
             "project": "projects/ngx-scanner-qrcode/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-scanner-qrcode/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {

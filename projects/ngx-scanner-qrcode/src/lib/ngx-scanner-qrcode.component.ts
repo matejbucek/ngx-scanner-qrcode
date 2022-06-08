@@ -1,37 +1,45 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import jsQR from './qrcode';
 
 @Component({
   selector: 'ngx-scanner-qrcode',
   template: `<canvas #canvas [style.width.%]="100" [style.height.%]="100"></canvas>`,
-  exportAs: 'scanner'
+  queries: { canvas: new ViewChild('divRef', { static: true }) },
+  inputs: ['line', 'color'],
+  outputs: ['data', 'error'],
+  exportAs: 'scanner',
 })
 export class NgxScannerQrcodeComponent {
 
-  @ViewChild('canvas', { static: true }) canvasElm: ElementRef;
-
-  @Input() color: string = '#008000';
-  @Input() line: number = 4;
-  @Output() data = new EventEmitter<string>();
-  @Output() error = new EventEmitter<any>();
-
-  private videoElm: any;
+  // private
+  private line = 4;
+  private color = '#008000';
+  private canvas: ElementRef;
+  private data = new EventEmitter<string>();
+  private error = new EventEmitter<any>();
+  private videoElement: HTMLVideoElement | any;
   private medias: MediaStreamConstraints = { video: { facingMode: "environment" } };
+
+  // public
   public isLoading = false;
   public isStart = false;
-
-  constructor() { }
 
   ngOnInit(): void {
     this.initBackgroundColor();
   }
 
+  /**
+   * initBackgroundColor
+   */
   private initBackgroundColor() {
-    const ctx = this.canvasElm.nativeElement.getContext('2d') as CanvasRenderingContext2D;
+    const ctx = this.canvas.nativeElement.getContext('2d') as CanvasRenderingContext2D;
     ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, this.canvasElm.nativeElement.width, this.canvasElm.nativeElement.height);
+    ctx.fillRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
   }
 
+  /**
+   * toggleCamera
+   */
   public toggleCamera() {
     if (this.isStart) {
       this.stop()
@@ -40,21 +48,34 @@ export class NgxScannerQrcodeComponent {
     }
   }
 
+  /**
+   * start
+   * @returns 
+   */
   public start() {
-    if (this.isStart)
+    if (this.isStart) {
       return;
+    }
+
     this.isLoading = true;
-    this.videoElm = document.createElement('video');
-    // Use facingMode: environment to attemt to get the front camera on phones
+    this.videoElement = document.createElement('video');
+
+    /**
+     * MediaStream
+     * Use facingMode: environment to attemt to get the front camera on phones
+     */
     navigator.mediaDevices.getUserMedia(this.medias).then((stream: MediaStream) => {
       this.isStart = true;
-      this.videoElm.srcObject = stream;
-      this.videoElm.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
-      this.videoElm.play();
+      this.videoElement.srcObject = stream;
+      this.videoElement.setAttribute("playsinline", 'true'); // required to tell iOS safari we don't want fullscreen
+      this.videoElement.play();
       requestAnimationFrame(scanner);
     }).catch(() => this.stop());
 
-    const ctx = this.canvasElm.nativeElement.getContext('2d') as CanvasRenderingContext2D;
+    /**
+     * drawFrame
+     */
+    const ctx = this.canvas.nativeElement.getContext('2d') as CanvasRenderingContext2D;
     const drawFrame = (begin, end) => {
       ctx.beginPath();
       ctx.moveTo(begin.x, begin.y);
@@ -64,12 +85,15 @@ export class NgxScannerQrcodeComponent {
       ctx.stroke();
     }
 
+    /**
+     * scanner
+     */
     const scanner = () => {
-      if (this.videoElm.readyState === this.videoElm.HAVE_ENOUGH_DATA) {
-        this.canvasElm.nativeElement.height = this.videoElm.videoHeight;
-        this.canvasElm.nativeElement.width = this.videoElm.videoWidth;
-        ctx.drawImage(this.videoElm, 0, 0, this.canvasElm.nativeElement.width, this.canvasElm.nativeElement.height);
-        const imageData = ctx.getImageData(0, 0, this.canvasElm.nativeElement.width, this.canvasElm.nativeElement.height);
+      if (this.videoElement.readyState === this.videoElement.HAVE_ENOUGH_DATA) {
+        this.canvas.nativeElement.height = this.videoElement.videoHeight;
+        this.canvas.nativeElement.width = this.videoElement.videoWidth;
+        ctx.drawImage(this.videoElement, 0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
+        const imageData = ctx.getImageData(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
         const code = jsQR(imageData.data, imageData.width, imageData.height, {
           inversionAttempts: "dontInvert",
         });
@@ -86,12 +110,15 @@ export class NgxScannerQrcodeComponent {
     }
   }
 
+  /**
+   * stop
+   */
   public stop() {
     this.data.emit(null);
     this.isStart = false;
     this.isLoading = false;
     try {
-      this.videoElm && this.videoElm.srcObject.getTracks().forEach(track => track.stop());
+      this.videoElement && this.videoElement.srcObject.getTracks().forEach(track => track.stop());
     } catch (error) {
       this.error.emit('No camera detected!');
     }
