@@ -1,0 +1,82 @@
+{
+  "name": "ngx-scanner-qrcode",
+  "version": "1.0.19",
+  "description": "This library is built to provide a solution scanner QR code. This library takes in raw images and will locate, extract and parse any QR code found within.",
+  "keywords": [
+    "ng",
+    "ngx",
+    "angular",
+    "angular2",
+    "angular2+",
+    "scanner",
+    "reader",
+    "camera",
+    "video",
+    "canvas",
+    "webcam",
+    "webcam-qrcode",
+    "qrcode",
+    "qr-code",
+    "ng-qrcode",
+    "ng-qrcode-scanner",
+    "ngx-qrcode",
+    "ngx-qrcode-scanner",
+    "ngx-scanner-qrcode",
+    "angular-qrcode",
+    "angular-qrcode-scanner",
+    "ng-scanner",
+    "ngx-scanner",
+    "jsqr",
+    "jsqrcode",
+    "js-qrcode",
+    "js-scanner",
+    "qrcode-scanner",
+    "qrcode-reader",
+    "ng-qrcode-reader",
+    "ngx-qrcode-reader",
+    "ng-qrcodescanner",
+    "ngx-qrcodescanner",
+    "angular-qrcodescanner",
+    "qr-code-scanner",
+    "ng-qr-code-scanner",
+    "ngx-qr-code-scanner",
+    "html5-qrcode",
+    "qrcode-reader-angular",
+    "qr-scanner",
+    "qr-scanner-angular",
+    "webscan-qrcode"
+  ],
+  "author": "DaiDH <duonghuudai.id002@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com/id1945/ngx-scanner-qrcode.git"
+  },
+  "peerDependencies": {
+    "@angular/common": "^8.0.3",
+    "@angular/core": "^8.0.3"
+  },
+  "module": "fesm2015/ngx-scanner-qrcode.mjs",
+  "es2020": "fesm2020/ngx-scanner-qrcode.mjs",
+  "esm2020": "esm2020/ngx-scanner-qrcode.mjs",
+  "fesm2020": "fesm2020/ngx-scanner-qrcode.mjs",
+  "fesm2015": "fesm2015/ngx-scanner-qrcode.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2020": "./esm2020/ngx-scanner-qrcode.mjs",
+      "es2020": "./fesm2020/ngx-scanner-qrcode.mjs",
+      "es2015": "./fesm2015/ngx-scanner-qrcode.mjs",
+      "node": "./fesm2015/ngx-scanner-qrcode.mjs",
+      "default": "./fesm2020/ngx-scanner-qrcode.mjs"
+    }
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

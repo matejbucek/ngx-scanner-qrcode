@@ -1,0 +1,6 @@
+/*
+ * Public API Surface of ngx-scanner-qrcode
+ */
+export * from './lib/ngx-scanner-qrcode.component';
+export * from './lib/ngx-scanner-qrcode.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3Byb2plY3RzL25neC1zY2FubmVyLXFyY29kZS9zcmMvcHVibGljLWFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUVILGNBQWMsb0NBQW9DLENBQUM7QUFDbkQsY0FBYyxpQ0FBaUMsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2Ygbmd4LXNjYW5uZXItcXJjb2RlXG4gKi9cblxuZXhwb3J0ICogZnJvbSAnLi9saWIvbmd4LXNjYW5uZXItcXJjb2RlLmNvbXBvbmVudCc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9uZ3gtc2Nhbm5lci1xcmNvZGUubW9kdWxlJztcbiJdfQ==
