@@ -58,7 +58,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:lib": "ng-packagr -p projects/ngx-scanner-qrcode/ng-package.json"
   },
   "private": true,
   "dependencies": {
@@ -86,6 +87,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "ng-packagr": "^14.2.1",
     "typescript": "~4.7.4"
   }
 }
